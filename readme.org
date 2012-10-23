@@ -1,0 +1,50 @@
+* Zmalltalker lears Dbus
+  I've been meaning to for a long time, but seeing my buddy @thomanil
+  shelling out to call Ruby from Emacs made me invest a few minutes of
+  my life into learning this stuff. As it turns out, it wasn't all
+  that difficult.
+
+  I've created a couple of files in here, that you should be able to
+  run on a Linux machine. Get one if you don't already have one.
+
+** Run server.rb under ruby
+   There's a Gemfile, so you can simply do a
+#+BEGIN_SRC shell
+bundle install
+bundle exec ruby server.rb
+#+END_SRC
+
+   Not much will happen, you just set up a "mail server". Don't worry,
+   it won't do anything interesting. Keep it running.
+
+** Run client.rb under Ruby
+
+   Same story here
+#+BEGIN_SRC shell
+bundle exec ruby client.rb
+#+END_SRC
+
+   This time you'll see some output, but not in the same
+   terminal. Rather, your "mail server" will print some nasty
+   messages, "delivering mail" for your Ruby client.
+
+   Keep the client running as well, as it sets up a listener for a
+   DBus signal.
+
+** Run ./sample.sh
+   This time you won't Ruby, just run it
+
+#+BEGIN_SRC shell
+./sample.sh
+#+END_SRC
+
+   This time, both your server and client terminals will start acting
+   up. Congratulations: you just set up three way IPC using DBus!
+
+** Still with me?
+   For once I've added some comments to the top of source code. It
+   should explain what's going on, as well as show the world my
+   ignorance.
+
+   If you think this is as fun as I think, there's a [[https://github.com/mvidner/ruby-dbus/blob/master/doc/Tutorial.md][fairly decent
+   explanation of DBus in Ruby]] that you could read.
