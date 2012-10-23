@@ -48,3 +48,6 @@ bundle exec ruby client.rb
 
    If you think this is as fun as I think, there's a [[https://github.com/mvidner/ruby-dbus/blob/master/doc/Tutorial.md][fairly decent
    explanation of DBus in Ruby]] that you could read.
+** Disclaimer
+   The *real* reason I wanted to learn DBus was that it's required
+   knowledge to play with Systemd. More about that another time.
