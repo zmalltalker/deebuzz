@@ -1,4 +1,4 @@
-* Zmalltalker lears Dbus
+* Zmalltalker learns Dbus
   I've been meaning to for a long time, but seeing my buddy @thomanil
   shelling out to call Ruby from Emacs made me invest a few minutes of
   my life into learning this stuff. As it turns out, it wasn't all
