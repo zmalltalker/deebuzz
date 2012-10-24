@@ -77,8 +77,8 @@ Exec=/home/marius/Projects/deebuzz/server.rb
 
    This is so cool I had to make [[http://ascii.io/a/1487][a screencast]] to prove it works.
 ** Doing it in Emacs
-   I just had to. [[file:mail.el][file:~/Projects/deebuzz/mail.el]] This uses the Emacs
-   DBus library to run as a client to the provided Ruby server.
+   I just had to. The supplied mail.el uses the Emacs DBus library to run as a client
+   to the provided Ruby server.
 ** Disclaimer
    The *real* reason I wanted to learn DBus was that it's required
    knowledge to play with Systemd. More about that another time.
