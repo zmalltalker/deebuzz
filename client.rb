@@ -13,12 +13,17 @@ mailserver = ruby_service.object("/net/kjeldahlnilsson/MyMailServer")
 mailserver.introspect
 mailserver.default_iface = "net.kjeldahlnilsson.MailServer"
 
+# Deliver a message, print reponse
+puts mailserver.deliver("This is so awesome", "marius@stones.com", "Me so horny. Love you long time")
 
-mailserver.deliver "This is so awesome", "marius@stones.com", "Me so horny. Love you long time"
 
 mailserver.on_signal("mailArrived") do |new_count, total_count|
   puts "Looks like the mail's still working. #{new_count}/#{total_count} messages."
 end
+
+# Read a message
+res = mailserver.readMail
+puts "Just fetched some mail. This is what I got: #{res}"
 
 loop = DBus::Main.new
 loop << bus

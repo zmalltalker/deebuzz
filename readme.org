@@ -48,6 +48,34 @@ bundle exec ruby client.rb
 
    If you think this is as fun as I think, there's a [[https://github.com/mvidner/ruby-dbus/blob/master/doc/Tutorial.md][fairly decent
    explanation of DBus in Ruby]] that you could read.
+** Bus activation
+   Now this is where it gets fun. Instead of manually starting your
+   DBus server, wouldn't it be cool if it was just started whenever
+   it's needed? DBus has this really cool mechanism called bus
+   activation. Instead of manually ensuring that a program with a
+   given name on the bus is running, Dbus can be told how to start a
+   program providing it. Making this work is really easy. If you have
+   a look in =/usr/share/dbus-1/services= you'll find a bunch of files
+   with a =.service= suffix. These files let DBus know about existing
+   bus names on your machine and how to get them running. And DBus
+   will only start it once within a given context. So if you use the
+   session bus, DBus will start the program the first time it's
+   requested (unless it's already running).
+
+   To make the =server.rb= program (which has the name
+   =net.kjeldahlnilsson.mail= on the bus, add this file to
+   =/usr/share/dbus-1/services/thomanil.service=:
+
+#+BEGIN_EXAMPLE
+[D-BUS Service]
+Name=net.kjeldahlnilsson.mail
+Exec=/home/marius/Projects/deebuzz/server.rb
+#+END_EXAMPLE
+
+   Now, instead of starting server.rb manually, simply run the
+   client.rb script and see what happens.
+
+   This is so cool I had to make [[http://ascii.io/a/1487][a screencast]] to prove it works.
 ** Disclaimer
    The *real* reason I wanted to learn DBus was that it's required
    knowledge to play with Systemd. More about that another time.

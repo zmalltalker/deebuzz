@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 # A very basic Ruby DBus server
 # We register a "mail server" under the bus name net.kjeldahlnilsson.mail
 # with an "instance" /net/kjeldahlnilsson/MyMailServer
@@ -26,6 +27,14 @@ class Mailbox
   def size
     @messages.count
   end
+
+  def pop
+    @messages.pop
+  end
+
+  def empty?
+    @messages.empty?
+  end
 end
 
 class MailServer < DBus::Object
@@ -36,11 +45,21 @@ class MailServer < DBus::Object
   end
   dbus_interface "net.kjeldahlnilsson.MailServer" do
 
-    dbus_method :deliver, "in subject:s, in recipient:s, in body:s" do |subject, recipient, body|
+    dbus_method :deliver, "in subject:s, in recipient:s, in body:s, out response:s" do |subject, recipient, body|
       MailServer.mailbox << [subject,recipient,body]
       puts "I just delivered (#{subject} to #{recipient})"
       puts "The message reads:\n\t#{body}"
-      puts "There are now #{MailServer.mailbox.size} messages"
+      "Thanks for your message. I now hold #{MailServer.mailbox.size} messages"
+    end
+
+    dbus_method :readMail, "out subject:s" do
+      if MailServer.mailbox.empty?
+        "No mail"
+      else
+        message = MailServer.mailbox.pop
+        puts "Someone stopped by to check the mail. I now keep #{MailServer.mailbox.size} messages"
+        message[0]
+      end
     end
 
     dbus_signal "mailArrived", "toto:u, tutu:u"
