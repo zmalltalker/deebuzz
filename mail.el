@@ -1,3 +1,4 @@
+(require 'dbus)
 (defvar z-mail-bus-name "net.kjeldahlnilsson.mail" "The name on the session bus")
 (defvar z-mail-bus-object "/net/kjeldahlnilsson/MyMailServer" "The name of the object you're talking to")
 (defvar z-mail-interface "net.kjeldahlnilsson.MailServer" "The interface your object implements")
