@@ -10,21 +10,44 @@
 require "dbus"
 bus = DBus.session_bus
 
+# Register a name on the session bus
 service = bus.request_service("net.kjeldahlnilsson.mail")
 
 
+class Mailbox
+  def initialize
+    @messages = []
+  end
+
+  def <<(message)
+    @messages << message
+  end
+
+  def size
+    @messages.count
+  end
+end
+
 class MailServer < DBus::Object
+  @mailbox = Mailbox.new
+
+  def self.mailbox
+    @mailbox
+  end
   dbus_interface "net.kjeldahlnilsson.MailServer" do
 
     dbus_method :deliver, "in subject:s, in recipient:s, in body:s" do |subject, recipient, body|
+      MailServer.mailbox << [subject,recipient,body]
       puts "I just delivered (#{subject} to #{recipient})"
       puts "The message reads:\n\t#{body}"
+      puts "There are now #{MailServer.mailbox.size} messages"
     end
 
     dbus_signal "mailArrived", "toto:u, tutu:u"
   end
 end
 
+# Register an object
 exported_obj = MailServer.new("/net/kjeldahlnilsson/MyMailServer")
 
 service.export(exported_obj)
